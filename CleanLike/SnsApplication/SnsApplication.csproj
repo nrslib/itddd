@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClArc" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SnsApplicationPort\SnsApplicationPort.csproj" />
+    <ProjectReference Include="..\SnsDomain\SnsDomain.csproj" />
+  </ItemGroup>
+
+</Project>
