@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Transactions;
 using _01_to_03.Application.Users.Commons;
 using _01_to_03.Application.Users.Delete;
 using _01_to_03.Application.Users.Get;
@@ -42,68 +41,52 @@ namespace _01_to_03.Application.Users
             return new UserGetAllResult(userModels);
         }
 
-        public UserRegisterResult Register(UserRegisterCommand command)
+        public void Register(UserRegisterCommand command)
         {
-            using (var transaction = new TransactionScope())
+            var name = new UserName(command.Name);
+            var user = new User(name);
+
+            if (userService.Exists(user))
             {
-                var name = new UserName(command.Name);
-                var user = new User(name);
-                if (userService.Exists(user))
-                {
-                    throw new CanNotRegisterUserException(user, "ユーザは既に存在しています。");
-                }
-
-                userRepository.Save(user);
-
-                transaction.Complete();
-
-                return new UserRegisterResult(user.Id.Value);
+                throw new CanNotRegisterUserException(user, "ユーザは既に存在しています。");
             }
+
+            userRepository.Save(user);
         }
 
         public void Update(UserUpdateCommand command)
         {
-            using (var transaction = new TransactionScope())
+            var id = new UserId(command.Id);
+            var user = userRepository.Find(id);
+            if (user == null)
             {
-                var id = new UserId(command.Id);
-                var user = userRepository.Find(id);
-                if (user == null)
-                {
-                    throw new UserNotFoundException(id);
-                }
-
-                if (command.Name != null)
-                {
-                    var name = new UserName(command.Name);
-                    user.ChangeName(name);
-
-                    if (userService.Exists(user))
-                    {
-                        throw new CanNotRegisterUserException(user, "ユーザは既に存在しています。");
-                    }
-                }
-
-                userRepository.Save(user);
-
-                transaction.Complete();
+                throw new UserNotFoundException(id);
             }
+
+            if (command.Name != null)
+            {
+                var name = new UserName(command.Name);
+                user.ChangeName(name);
+
+                if (userService.Exists(user))
+                {
+                    throw new CanNotRegisterUserException(user, "ユーザは既に存在しています。");
+                }
+            }
+
+            userRepository.Save(user);
         }
 
         public void Delete(UserDeleteCommand command)
         {
-            using (var transaction = new TransactionScope())
+            var id = new UserId(command.Id);
+            var user = userRepository.Find(id);
+            if (user == null)
             {
-                var id = new UserId(command.Id);
-                var user = userRepository.Find(id);
-                if (user == null)
-                {
-                    return;
-                }
-
-                userRepository.Delete(user);
-
-                transaction.Complete();
+                return;
             }
+
+            userRepository.Delete(user);
         }
     }
 }

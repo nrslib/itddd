@@ -130,7 +130,7 @@ namespace _04_to_12.SqlInfrastructure
    WHEN MATCHED THEN
      UPDATE SET name = data.name
    WHEN NOT MATCHED THEN
-     INSERT (id, name, type)
+     INSERT (id, name)
      VALUES (data.id, data.name);
 ";
                 command.Parameters.Add(new SqlParameter("@id", user.Id.Value));
