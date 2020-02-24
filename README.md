@@ -29,4 +29,4 @@ https://nrslib.com/clean-architecture/
 
 ## SampleCodes
 
-１～１３章のサンプルコードです。
+各章のサンプルコードです。
