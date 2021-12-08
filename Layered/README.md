@@ -67,7 +67,7 @@ IoC Containerに対するインジェクションモジュールの選択肢は�
 次のように appsettings.json / asppsetting.Development.json で InMemoryModuleDependencySetup を指定してください。  
 ※デフォルトはこの設定がされています。  
 
-```
+```json
 "Dependency": {
   "setup": "InMemoryModuleDependencySetup"
 }
@@ -78,7 +78,7 @@ IoC Containerに対するインジェクションモジュールの選択肢は�
 次のように appsettings.json / asppsetting.Development.json で SqlConnectionDependencySetup を指定してください。  
 この設定はデータベースを利用するためデータベースとテーブルを準備する（後述）必要があります。  
 
-```
+```json
 "Dependency": {
   "setup": "SqlConnectionDependencySetup"
 }
@@ -89,7 +89,7 @@ IoC Containerに対するインジェクションモジュールの選択肢は�
 次のように appsettings.json / asppsetting.Development.json で EFDependencySetup を指定してください。  
 この設定はデータベースを利用するためデータベースとテーブルを準備する（後述）必要があります。  
 
-```
+```json
 "Dependency": {
   "setup": "EFDependencySetup"
 }
@@ -98,7 +98,7 @@ IoC Containerに対するインジェクションモジュールの選択肢は�
 Entity Framework を用いながらインメモリで動作させる選択肢もあります。
 次のように追加設定を行ってください。
 
-```
+```json
 "Dependency": {
   "SetupName": "EFDependencySetup",
   "Extra": {
@@ -116,7 +116,7 @@ Entity Framework 及び SQL を用いた処理が利用するデータベース�
 
 コードファーストでデータベースを準備する際にはまず appsetting.json / appsettings.Development.json を次のように EFDependencySetup を使用するように変更します。  
 
-```
+```json
 "Dependency": {
   "setup": "EFDependencySetup"
 }
@@ -124,12 +124,12 @@ Entity Framework 及び SQL を用いた処理が利用するデータベース�
 
 次に、パッケージマネージャコンソールで EFInfrastructure を対象にして、次のようにマイグレーションを生成してください。  
 
-```
+```Powershell
 Add-Migration Initial
 ```
 
 その後、パッケージマネージャコンソールでデータベースの更新を行う（Update-Database コマンドを実行する）と itdddContext1 というデータベースが作成されます。  
 
-```
+```Powershell
 Update-Database
 ```
