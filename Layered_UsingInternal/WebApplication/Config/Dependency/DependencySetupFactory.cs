@@ -7,7 +7,7 @@ namespace WebApplication.Config.Dependency
     {
         public IDependencySetup CreateSetup(IConfiguration configuration)
         {
-            var setupName = configuration["Dependency:SetupName"];
+            var setupName = configuration["Dependency:setup"];
             switch (setupName)
             {
                 case nameof(InMemoryModuleDependencySetup):
